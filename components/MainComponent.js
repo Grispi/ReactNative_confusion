@@ -4,6 +4,7 @@ import Dishdetail from "./DishdetailComponent";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
+import Reservation from "./ReservationComponent";
 import {
   View,
   Platform,
@@ -144,6 +145,31 @@ const AboutNavigator = createStackNavigator(
   }
 );
 
+const ReservationNavigator = createStackNavigator(
+  {
+    Reservation: { screen: Reservation }
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: "#512DA8"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff"
+      },
+      headerLeft: (
+        <Icon
+          name="menu"
+          size={24}
+          color="white"
+          onPress={() => navigation.toggleDrawer()}
+        />
+      )
+    })
+  }
+);
+
 const CustomDrawerContentComponent = props => (
   <ScrollView>
     <SafeAreaView
@@ -172,28 +198,65 @@ const MainNavigator = createDrawerNavigator(
       screen: HomeNavigator,
       navigationOptions: {
         title: "Home",
-        drawerLabel: "Home"
+        drawerLabel: "Home",
+        drawerIcon: ({ tintColor }) => (
+          <Icon name="home" type="font-awesome" size={24} color={tintColor} />
+        )
       }
     },
     About: {
       screen: AboutNavigator,
       navigationOptions: {
         title: "AboutUs",
-        drawerLabel: "About Us"
+        drawerLabel: "About Us",
+        drawerIcon: ({ tintColor }) => (
+          <Icon
+            name="info-circle"
+            type="font-awesome"
+            size={24}
+            color={tintColor}
+          />
+        )
       }
     },
     Menu: {
       screen: MenuNavigator,
       navigationOptions: {
         title: "Menu",
-        drawerLabel: "Menu"
+        drawerLabel: "Menu",
+        drawerIcon: ({ tintColor }) => (
+          <Icon name="list" type="font-awesome" size={24} color={tintColor} />
+        )
       }
     },
     Contact: {
       screen: ContactNavigator,
       navigationOptions: {
         title: "Contact",
-        drawerLabel: "Contact Us"
+        drawerLabel: "Contact Us",
+        drawerIcon: ({ tintColor }) => (
+          <Icon
+            name="address-card"
+            type="font-awesome"
+            size={22}
+            color={tintColor}
+          />
+        )
+      }
+    },
+    Reservation: {
+      screen: ReservationNavigator,
+      navigationOptions: {
+        title: "Reserve table",
+        drawerLabel: "Reserve table",
+        drawerIcon: ({ tintColor }) => (
+          <Icon
+            name="cutlery"
+            type="font-awesome"
+            size={22}
+            color={tintColor}
+          />
+        )
       }
     }
   },
