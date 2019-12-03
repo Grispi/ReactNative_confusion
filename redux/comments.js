@@ -20,6 +20,16 @@ export const comments = (
         errMess: action.payload,
         comments: []
       };
+    case ActionTypes.ADD_COMMENT:
+      let commentId = state.comments.length;
+      let comment = { ...action.payload, id: commentId };
+
+      return {
+        ...state,
+        errMess: null,
+        comments: state.comments.concat(comment)
+      };
+
     default:
       return state;
   }
