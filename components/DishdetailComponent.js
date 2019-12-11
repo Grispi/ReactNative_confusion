@@ -32,10 +32,13 @@ const mapDispatchToProps = dispatch => ({
 
 function RenderDish(props) {
   const dish = props.dish;
-  // MoveX is the latest screen coordinates of the recently moved touch gesture and similarly moveY
-  //is the screen coordinates of the recently moved touch.
-  // dx is the accumulated distance of the gesture since the touch started along the X direction
+
+  handleViewRef = ref => (this.view = ref);
   const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
+    // MoveX is the latest screen coordinates of the recently moved touch gesture and similarly moveY
+    //is the screen coordinates of the recently moved touch.
+    // dx is the accumulated distance of the gesture since the touch started along the X direction
+
     //the way the distances are measured is with 00 at the top-left corner
     if (dx < -200) return true;
     else return false;
@@ -45,6 +48,13 @@ function RenderDish(props) {
     // 2 parameters: event and gesture -> that contain information about the user gesture
     onStartShouldSetPanResponder: (e, gestureState) => {
       return true;
+    },
+    onPanResponderGrant: () => {
+      this.view
+        .rubberBand(1000)
+        .then(endState =>
+          console.log(endState.finished ? "Finished" : "Cancelled")
+        );
     },
     onPanResponderEnd: (e, gestureState) => {
       console.log("pan responder end", gestureState);
@@ -78,6 +88,7 @@ function RenderDish(props) {
         animation="fadeInDown"
         duration={2000}
         delay={1000}
+        ref={this.handleViewRef}
         {...panResponder.panHandlers}
       >
         <Card featuredTitle={dish.name} image={{ uri: baseUrl + dish.image }}>
