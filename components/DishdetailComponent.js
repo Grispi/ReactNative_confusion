@@ -43,7 +43,11 @@ function RenderDish(props) {
     if (dx < -200) return true;
     else return false;
   };
-
+  const recognizeDragLeft = ({ moveX, moveY, dx, dy }) => {
+    // console.log(dx);
+    if (dx > 200) return true;
+    else return false;
+  };
   const panResponder = PanResponder.create({
     // 2 parameters: event and gesture -> that contain information about the user gesture
     onStartShouldSetPanResponder: (e, gestureState) => {
@@ -58,7 +62,7 @@ function RenderDish(props) {
     },
     onPanResponderEnd: (e, gestureState) => {
       console.log("pan responder end", gestureState);
-      if (recognizeDrag(gestureState))
+      if (recognizeDrag(gestureState)) {
         Alert.alert(
           "Add to Favorite?",
           "Are you sure you wish to add " + dish.name + " to your favorites?",
@@ -78,6 +82,8 @@ function RenderDish(props) {
           ],
           { cancelable: false }
         );
+        return true;
+      } else if (recognizeDragLeft(gestureState)) props.toggleModal();
       return true;
     }
   });

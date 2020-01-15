@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Menu from "./MenuComponent";
-import Dishdetail from "./DishdetailComponent";
+// import Dishdetail from "./DishdetailComponent";
+import Dishdetail from "./DishdetailComponent1";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import Reservation from "./ReservationComponent";
 import Favorites from "./FavoriteComponent";
+import Login from "./LoginComponent";
 import {
   View,
   Platform,
@@ -196,6 +198,31 @@ const FavoritesNavigator = createStackNavigator(
   }
 );
 
+const LoginNavigator = createStackNavigator(
+  {
+    Login: { screen: Login }
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: "#512DA8"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff"
+      },
+      headerLeft: (
+        <Icon
+          name="menu"
+          size={24}
+          color="white"
+          onPress={() => navigation.toggleDrawer()}
+        />
+      )
+    })
+  }
+);
+
 const CustomDrawerContentComponent = props => (
   <ScrollView>
     <SafeAreaView
@@ -220,6 +247,21 @@ const CustomDrawerContentComponent = props => (
 
 const MainNavigator = createDrawerNavigator(
   {
+    Login: {
+      screen: LoginNavigator,
+      navigationOptions: {
+        title: "Login",
+        drawerLabel: "Login",
+        drawerIcon: ({ tintColor }) => (
+          <Icon
+            name="sign-in"
+            type="font-awesome"
+            size={24}
+            color={tintColor}
+          />
+        )
+      }
+    },
     Home: {
       screen: HomeNavigator,
       navigationOptions: {
@@ -299,6 +341,7 @@ const MainNavigator = createDrawerNavigator(
   },
 
   {
+    initialRouteName: "Home",
     drawerBackgroundColor: "#D1C4E9",
     contentComponent: CustomDrawerContentComponent
   }
