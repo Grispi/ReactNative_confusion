@@ -215,7 +215,7 @@ const LoginNavigator = createStackNavigator(
         <Icon
           name="menu"
           size={24}
-          color="white"
+          iconStyle={{ color: "white" }}
           onPress={() => navigation.toggleDrawer()}
         />
       )
