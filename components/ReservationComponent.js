@@ -85,6 +85,62 @@ class Reservation extends Component {
     } else permission;
   }
 
+  // async obtainCalendarPermission() {
+  //   const calendarPermission = await Permissions.askAsync(Permissions.CALENDAR);
+  //   return calendarPermission.status === "granted";
+  // }
+
+  // async obtainDefaultCalendarId() {
+  //   let calendar = null;
+  //   if (Platform.OS === "ios") {
+  //     // ios: get default calendar
+  //     calendar = await Calendar.getDefaultCalendarAsync();
+  //   } else {
+  //     // Android: find calendar with `isPrimary` == true
+  //     const calendars = await Calendar.getCalendarsAsync();
+  //     calendar = calendars
+  //       ? calendars.find(cal => cal.isPrimary) || calendars[0]
+  //       : null;
+  //   }
+  //   return calendar ? calendar.id : null;
+  // }
+
+  // async addReservationToCalendar(date) {
+  //   if (await this.obtainCalendarPermission()) {
+  //     Calendar.createEventAsync(await this.obtainDefaultCalendarId(), {
+  //       title: "Con Fusion Table Reservation",
+  //       startDate: new Date(Date.parse(date)),
+  //       endDate: new Date(Date.parse(date) + 2 * 60 * 60 * 1000),
+  //       location:
+  //         "121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong",
+  //       timeZone: "Asia/Hong_Kong"
+  //     });
+  //   }
+  // }
+
+  // async addReservationToCalendar(date) {
+  //   await this.obtainCalendarPermission();
+  //   const calendars = await Calendar.getCalendarsAsync();
+  //   const calendar = calendars.find(
+  //     ({ allowsModifications }) => allowsModifications
+  //   );
+
+  //   let startDate = new Date(Date.parse(date));
+  //   let endDate = new Date(Date.parse(date) + 2 * 60 * 60 * 1000);
+
+  //   console.log(startDate);
+
+  //   //I NEED TO FIX THE DATE
+  //   const details = {
+  //     title: "Con Fusion Table Reservation",
+  //     startDate: startDate,
+  //     endDate: endDate,
+  //     timeZone: "Asia/Hong_Kong",
+  //     location: "121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong"
+  //   };
+  //   Calendar.createEventAsync(calendar.id, details);
+  // }
+
   addReservationToCalendar = async date => {
     await this.obtainCalendarPermission();
 
