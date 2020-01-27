@@ -14,7 +14,8 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Text
+  Text,
+  ToastAndroid
 } from "react-native";
 import {
   createStackNavigator,
@@ -30,6 +31,8 @@ import {
   fetchPromos,
   fetchLeaders
 } from "../redux/ActionCreators";
+import NetInfo from "@react-native-community/netinfo";
+import Toast from "react-native-tiny-toast";
 
 const mapStateToProps = state => {
   return {};
@@ -353,7 +356,60 @@ class Main extends Component {
     this.props.fetchComments();
     this.props.fetchPromos();
     this.props.fetchLeaders();
+
+    this.unsubscribeNetInfo = NetInfo.addEventListener(
+      this.handleConnectivityChange
+    );
+    // const unsubscribe = NetInfo.addEventListener(state => {
+    //   console.log("Connection type", state.type);
+    //   console.log("Is connected?", state.isConnected);
+    // });
+
+    // unsubscribe();
+
+    // NetInfo.getConnectionInfo().then(connectionInfo => {
+    //   Toast.show(
+    //     "Initial Network connectivity Type: " +
+    //       connectionInfo.type +
+    //       ", effectiveType: " +
+    //       connectionInfo.effectiveType,
+    //     Toast.LONG
+    //   );
+    // });
+    // NetInfo.addEventListener("connectionChange", this.handleConnectivityChange);
+    NetInfo.fetch().then(connectionInfo => {
+      Toast.show("Initial Network connectivity Type: " + connectionInfo.type);
+    });
   }
+
+  componentWillUnmount() {
+    // NetInfo.removeEventListener(
+    //   "connectionChange",
+    //   this.handleConnectivityChange
+    // );
+    if (this.unsubscribeNetInfo) {
+      this.unsubscribeNetInfo();
+    }
+  }
+
+  handleConnectivityChange = connectionInfo => {
+    switch (connectionInfo.type) {
+      case "none":
+        Toast.show("You are now Offline!", { duration: 2000 });
+        break;
+      case "wifi":
+        Toast.show("You are now connected to WiFi!", { duration: 2000 });
+        break;
+      case "cellular":
+        Toast.show("You are now connected to Cellular!", { duration: 2000 });
+        break;
+      case "unknown":
+        Toast.show("You now have an unknow connection!", { duration: 2000 });
+        break;
+      default:
+        break;
+    }
+  };
 
   render() {
     return (
