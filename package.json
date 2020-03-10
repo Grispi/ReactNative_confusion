@@ -36,5 +36,7 @@
   "devDependencies": {
     "babel-preset-expo": "^7.1.0"
   },
+  "name": "confusion",
+  "version": "0.1.0",
   "private": true
 }
